@@ -12,6 +12,8 @@ public class WalkingObjective : MonoBehaviour
     [SerializeField]
     float walkSpeed = 2.0f;
 
+    [SerializeField] List<Transform> startingPath;
+
     Queue<Vector2> path;
     private Rigidbody2D rb;
     // Start is called before the first frame update
@@ -19,6 +21,8 @@ public class WalkingObjective : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         path = new Queue<Vector2>();
+
+        UpdatePath(startingPath);
     }
 
     // Update is called once per frame
