@@ -14,7 +14,7 @@ public class Person : MonoBehaviour
 {
     //configuration attributes: these attributes are meant to be fiddled with to make the person act differently, such as moving faster or spotting the alien quicker.
     [SerializeField] private float speedDefault = 1.0f;
-    [SerializeField] private float speedDefault = 1.0f;
+    //[SerializeField] private float speedDefault = 1.0f;
 
     //state variables: these variables are 
     private PerState state = PerState.Default; //state of the person. see enum declaration for more.
