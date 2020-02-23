@@ -7,7 +7,8 @@ public enum PerState //person state
     Default, //starting state of person. person will behave according to their specific type (kid, police, ice cream guy, etc).
     Attracted, //attracted to something, either player seducing them or at a world detail (ice cream truck, dance party, etc). will move towards source of attraction.
     Afraid, //scared of something, either player petitioning or at world detail (scary picture, loud noise, etc). will move away from source of scary.
-    Suspicious //has started to see alien. timer begins and a visual indicator ("!?") appear above them. if timer runs out before distracted, GAME OVER.
+    Suspicious, //has started to see alien. timer begins and a visual indicator ("!?") appear above them. if timer runs out before distracted, GAME OVER.
+    Leaving
 }
 
 public class Person : MonoBehaviour
@@ -27,7 +28,7 @@ public class Person : MonoBehaviour
     //state variables: these attributes are used and changed during the execution of the game.
     private PerState state = PerState.Default; //state of the person. see enum declaration for more.
     private Vector2 targetCurrent = new Vector2(0, 0); //default target that the person will seek towards unless distracted, either by player, world detail, or alien.
-    private Vector2 targetNew = new Vector2(0, 0); //target that gets overwritten by other scripts
+    private Vector2 targetNext = new Vector2(0, 0); //target that gets overwritten by other scripts
     private Queue<Vector2> path; //series of (possibly looping) target points that person will go to unless distracted
 
     private Rigidbody2D rb; //rigidbody for this gameobject
@@ -59,9 +60,14 @@ public class Person : MonoBehaviour
         //turn to target
         TurnTowardsPoint(player.transform.position); //rotate the gameobject's towards an arbitrary point
 
-        //move forward
-        rb.AddForce(transform.right.normalized * speedDefault * Time.deltaTime, ForceMode2D.Impulse); //move forwards* (*rightwards) at speedDefault times deltaTime
-
+        switch(state)
+        {
+            case PerState.Default:
+                //move forward
+                rb.AddForce(transform.right.normalized * speedDefault * Time.deltaTime, ForceMode2D.Impulse); //move forwards* (*rightwards) at speedDefault times deltaTime
+                break;
+        }
+        
         #region Old Test Stuff
 
         //Debug.DrawLine(transform.position, player.transform.position);
@@ -87,6 +93,27 @@ public class Person : MonoBehaviour
         turnAngle = Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg;
         turnQuat = Quaternion.AngleAxis(turnAngle, Vector3.forward);
         transform.rotation = Quaternion.Slerp(transform.rotation, turnQuat, Time.deltaTime * turnRate);
+    }
+
+    public void Scare()
+    {
+        state = PerState.Afraid;
+        //set target to nearest exit node
+    }
+
+    public void Attract(Vector2 attractPoint)
+    {
+        if(state == PerState.Afraid)
+        {
+
+        }
+        //set target to attractPoint
+
+    }
+
+    public void SeekExit()
+    {
+        //seek nearest exit node
     }
 
     //property for state
