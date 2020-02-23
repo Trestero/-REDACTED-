@@ -26,8 +26,9 @@ public class Person : MonoBehaviour
 
     //state variables: these attributes are used and changed during the execution of the game.
     private PerState state = PerState.Default; //state of the person. see enum declaration for more.
-    private Vector2 targetDefault = new Vector2(0, 0); //default target that the person will seek towards unless distracted, either by player, world detail, or alien.
+    private Vector2 targetCurrent = new Vector2(0, 0); //default target that the person will seek towards unless distracted, either by player, world detail, or alien.
     private Vector2 targetNew = new Vector2(0, 0); //target that gets overwritten by other scripts
+    private Queue<Vector2> path; //series of (possibly looping) target points that person will go to unless distracted
 
     private Rigidbody2D rb; //rigidbody for this gameobject
     private GameObject player; //reference to player gameobject
@@ -49,7 +50,8 @@ public class Person : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if((targetDefault - (Vector2)transform.position).sqrMagnitude <= (closeDistanceSqrRt * closeDistanceSqrRt))
+        //if gameobject is within a certain distance (closeDistanceSqrRt) of an arbitrary point, return true 
+        if ((targetCurrent - (Vector2)transform.position).sqrMagnitude <= (closeDistanceSqrRt * closeDistanceSqrRt))
         {
 
         }
