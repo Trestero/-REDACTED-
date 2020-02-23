@@ -22,7 +22,7 @@ public class Person : MonoBehaviour
 
     [SerializeField] private float spottingTime = 10.0f; //time it takes person to fully notice alien. when spotTimer runs out, person has spotted alien and GAME OVER.
 
-    
+
 
     //state variables: these attributes are used and changed during the execution of the game.
     private PerState state = PerState.Default; //state of the person. see enum declaration for more.

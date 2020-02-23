@@ -14,7 +14,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - House
   - 
   - 
   - 
@@ -41,4 +41,10 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: People
+    uniqueID: 3188431841
+    locked: 0
+  - name: House
+    uniqueID: 1122631489
     locked: 0
