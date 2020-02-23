@@ -116,7 +116,7 @@ public class Person : MonoBehaviour
 
                 if ((targetCurrent - (Vector2)transform.position).sqrMagnitude <= (closeDistanceSqrRt * closeDistanceSqrRt))
                 {
-                    Destroy(this);
+                    Destroy(this.gameObject);
                 }
                 break;
 
@@ -219,41 +219,61 @@ public class Person : MonoBehaviour
             {
                 case 0:
                     //add north node if it exists
-                    if (nodeMesh.ParkMesh[xIndex, yIndex - 1] != null)
+                    //(nodeMesh.ParkMesh[xIndex, yIndex - 1] != null)
+                    try
                     {
                         targetCurrent = nodeMesh.ParkMesh[xIndex, yIndex - 1];
                         validPick = true;
                         yIndex -= 1;
                     }
+                    catch
+                    {
+
+                    }
                     break;
 
                 case 1:
                     //add east node if it exists
-                    if (nodeMesh.ParkMesh[xIndex + 1, yIndex] != null)
+                    //if (nodeMesh.ParkMesh[xIndex + 1, yIndex] != null)
+                    try
                     {
                         targetCurrent = nodeMesh.ParkMesh[xIndex + 1, yIndex];
                         validPick = true;
                         xIndex += 1;
                     }
+                    catch
+                    {
+
+                    }
                     break;
 
                 case 2:
                     //add south node if it exists
-                    if (nodeMesh.ParkMesh[xIndex, yIndex + 1] != null)
+                    //if (nodeMesh.ParkMesh[xIndex, yIndex + 1] != null)
+                    try
                     {
                         targetCurrent = nodeMesh.ParkMesh[xIndex, yIndex + 1];
                         validPick = true;
                         yIndex += 1;
                     }
+                    catch
+                    {
+
+                    }
                     break;
 
                 case 3:
                     //add west node if it exists
-                    if (nodeMesh.ParkMesh[xIndex - 1, yIndex] != null)
+                    //if (nodeMesh.ParkMesh[xIndex - 1, yIndex] != null)
+                    try
                     {
                         targetCurrent = nodeMesh.ParkMesh[xIndex - 1, yIndex];
                         validPick = true;
                         xIndex -= 1;
+                    }
+                    catch
+                    {
+
                     }
                     break;
             }
@@ -271,7 +291,7 @@ public class Person : MonoBehaviour
     {
         //seek nearest exit node
         nearestExitNode = new Vector2(100, 100);
-        for(int i = 0; i < 25; i++)
+        for(int i = 0; i < 8; i++)
         {
             //find the nearest exit node among all the exit nodes
             if((nodeMesh.ExitMesh[i] - (Vector2)transform.position).sqrMagnitude < (nearestExitNode - (Vector2)transform.position).sqrMagnitude)

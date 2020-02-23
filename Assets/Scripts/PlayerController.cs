@@ -10,7 +10,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float accelerationRate = 0.5f;
     [SerializeField] float yellRange = 1f;
     [SerializeField] float megaphoneRange = 2f;
-    public Person[] people { get; set; }
+    [SerializeField] GameManager manager;
+    //public Person[] people { get; set; }
 
     enum CurrentTool
     {
@@ -77,20 +78,22 @@ public class PlayerController : MonoBehaviour
     void Megaphone()
     {
         //get people withn megaphone range
-        Person[] closeEnoughPeople = FindPeopleWithinRange(megaphoneRange);
+        GameObject[] closeEnoughPeople = FindPeopleWithinRange(megaphoneRange);
         //scare them
-        foreach (Person p in closeEnoughPeople)
-            p.Scare();
+        foreach (GameObject p in closeEnoughPeople)
+            p.GetComponent<Person>().Scare();
         
     }
 
     void Petition()
     {
+        Debug.Log("adfkljhsdfhklfga");
         //get people withn megaphone range
-        Person[] closeEnoughPeople = FindPeopleWithinRange(yellRange);
+        GameObject[] closeEnoughPeople = FindPeopleWithinRange(yellRange);
         //scare them
-        foreach (Person p in closeEnoughPeople)
-            p.Scare();
+        Debug.Log("People: " + closeEnoughPeople.Length);
+        foreach (GameObject p in closeEnoughPeople)
+            p.GetComponent<Person>().Scare();
 
     }
 
@@ -99,11 +102,11 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     /// <param name="range"></param>
     /// <returns></returns>
-    Person[] FindPeopleWithinRange(float range)
+    GameObject[] FindPeopleWithinRange(float range)
     {
-        var closeEnoughPeople = (from p in people
-                                where Vector2.Distance(p.transform.position, transform.position) <= megaphoneRange
-                                select p).ToArray();
+        var closeEnoughPeople = (from p in manager.People
+                                where Vector2.Distance(p.transform.position, transform.position) <= range
+                                 select p).ToArray();
         return closeEnoughPeople;
     }
 }

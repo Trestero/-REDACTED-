@@ -143,8 +143,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speedDefault: 10
-  speedAttracted: 1
-  speedAfraid: 1
+  speedAfraid: 15
+  speedSus: 3
   turnRate: 5
   closeDistanceSqrRt: 0.7
-  spottingTime: 10
+  alienReachDistanceSqrRt: 0.5
+  nodeVisits: 10
