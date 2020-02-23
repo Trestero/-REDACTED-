@@ -39,7 +39,7 @@ public class WalkingObjective : MonoBehaviour
 
             if ((path.Peek() - (Vector2)transform.position).sqrMagnitude <= (goalThreshold * goalThreshold))
             {
-                path.Dequeue();
+                path.Enqueue(path.Dequeue()); //move point from end of queue to start of queue
             }
         }
     }
