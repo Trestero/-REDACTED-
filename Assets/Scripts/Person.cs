@@ -13,20 +13,24 @@ public enum PerState //person state
 public class Person : MonoBehaviour
 {
     //configuration attributes: these attributes are meant to be fiddled with to make the person act differently, such as moving faster or spotting the alien quicker.
-    [SerializeField] private float speedDefault = 1.0f; //speed at which person moves while in Default state
-    [SerializeField] private float speedAttracted = 1.0f; //speed at which person moves while in Attracted state
-    [SerializeField] private float speedAfraid = 1.0f; //speed at which person moves while in Afaid state
+    [SerializeField] private float speedDefault = 10.0f; //speed at which person moves while in Default state
+    [SerializeField] private float speedAttracted = 10.0f; //speed at which person moves while in Attracted state
+    [SerializeField] private float speedAfraid = 10.0f; //speed at which person moves while in Afaid state
+    [SerializeField] private float turnRate = 5.0f; //rate at which person turns around to face target
+
+    [SerializeField] private float closeDistanceSqrRt = 0.7f; //**the square root of** how close gameobject has to be to a target to "reach" it
+
     [SerializeField] private float spottingTime = 10.0f; //time it takes person to fully notice alien. when spotTimer runs out, person has spotted alien and GAME OVER.
 
-    [SerializeField] private float turnRate = 3.0f; 
+    
 
     //state variables: these attributes are used and changed during the execution of the game.
     private PerState state = PerState.Default; //state of the person. see enum declaration for more.
     private Vector2 targetDefault = new Vector2(0, 0); //default target that the person will seek towards unless distracted, either by player, world detail, or alien.
-    private Vector2 targetAttract = new Vector2(0, 0); //target which is 
+    private Vector2 targetNew = new Vector2(0, 0); //target that gets overwritten by other scripts
 
-    private Rigidbody2D rb;
-    private GameObject player;
+    private Rigidbody2D rb; //rigidbody for this gameobject
+    private GameObject player; //reference to player gameobject
 
     //bookkeeping attributes: holder attributes and such. used mostly for convience.
     Vector3 vectorToTarget;
@@ -40,21 +44,21 @@ public class Person : MonoBehaviour
     {
         rb = transform.GetComponent<Rigidbody2D>();
         player = GameObject.FindGameObjectWithTag("Player");
-
-
-        Vector2 test = new Vector2(10, 1);
-        Debug.Log(test.normalized);
-
-
     }
 
     // Update is called once per frame
     void Update()
     {
-        TurnTowardsPoint(player.transform.position);
+        if((targetDefault - (Vector2)transform.position).sqrMagnitude <= (closeDistanceSqrRt * closeDistanceSqrRt))
+        {
+
+        }
+
+        //turn to target
+        TurnTowardsPoint(player.transform.position); //rotate the gameobject's towards an arbitrary point
 
         //move forward
-        rb.AddForce(Vector2.right * speedDefault * Time.deltaTime, ForceMode2D.Impulse); //move forwards* (*rightwards) at speedDefault times deltaTime
+        rb.AddForce(transform.right.normalized * speedDefault * Time.deltaTime, ForceMode2D.Impulse); //move forwards* (*rightwards) at speedDefault times deltaTime
 
         #region Old Test Stuff
 

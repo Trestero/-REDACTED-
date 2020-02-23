@@ -600,7 +600,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 4b63de96565e5ff4fad68840b0f23f52, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b670508a6b740054b80238d9277000f0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -640,8 +640,9 @@ MonoBehaviour:
   speedDefault: 10
   speedAttracted: 1
   speedAfraid: 1
-  spottingTime: 10
   turnRate: 5
+  closeDistanceSqrRt: 0.7
+  spottingTime: 10
 --- !u!1001 &5708312550502167270
 PrefabInstance:
   m_ObjectHideFlags: 0
